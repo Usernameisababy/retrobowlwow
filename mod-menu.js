@@ -44,8 +44,8 @@
     window._Q_ = function () {
       tickerMessageIndex = (tickerMessageIndex + 1) % 2;
       return tickerMessageIndex === 0
-        ? "Niggaaaaaa"
-        : "Mod made by Max Vidal ";
+        ? "Niggaaaaaaaaaaaaaa"
+        : "Mod made by Max ";
     };
   }
 
