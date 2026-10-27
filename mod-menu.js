@@ -44,8 +44,8 @@
     window._Q_ = function () {
       tickerMessageIndex = (tickerMessageIndex + 1) % 2;
       return tickerMessageIndex === 0
-        ? "this mod so tuff boiiii"
-        : "Mod made by Jaxson and available on GitHub :)";
+        ? "Niggaaaaaa"
+        : "Mod made by Max Vidal ";
     };
   }
 
