@@ -70569,7 +70569,7 @@ function _Vy1(_bi, _ci) {
 		global._gz = 'savedata4.ini';
 		global._kz = 'savedata5.ini';
 		global._2L = 'savedata_backup.ini';
-		global._zm = _771(44, 104, 255);
+		global._zm = _771(0, 0, 0);
 		global._qo = _771(210, 210, 10);
 		global._fi1 = _771(86, 216, 86);
 		global._gi1 = _771(116, 164, 255);
