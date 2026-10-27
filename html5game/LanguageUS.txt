@@ -829,8 +829,8 @@ ui_ChooseFace	Choose Face
 msg_ChooseFace	Choose your own profile image!
 ui_Uniforms	Uniforms
 btn_Uniforms	Change#Uniforms
-msg_TickerTwitter	this mod so tuff boiiii
-msg_TickerReddit	Mod made by Max
+msg_TickerTwitter	nigga
+msg_TickerReddit	Mod made by me duh
 msg_NextGame	Next game: $teamname1 at $teamname2
 ui_VisitKong	Visit Kongregate.com
 ui_min1	1 Min
