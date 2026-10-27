@@ -71097,16 +71097,16 @@ function gml_Script_gmcallback_poki_loadbar(_bi, _ci, _ii, _ji, _ki, _IM, _PT, _
 				return _FI;
 			}
 			case 1: {
-				return '#000000';
+				return '#fff';
 			}
 			case 2: {
-				return '#000000';
+				return '#fff';
 			}
 			case 3: {
 				return '#D2D20A';
 			}
 			case 4: {
-				return '#2C68FF';
+				return '#000';
 			}
 			case 5: {
 				return round(yyftime(_Ri(_mA1), 0.6));
