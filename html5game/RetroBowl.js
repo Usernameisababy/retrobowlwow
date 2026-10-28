@@ -174345,33 +174345,4 @@ cpd;
       return r;
     };
   }
-;(function(){
-  if (window.__bgPatch) return;
-  window.__bgPatch = true;
-
-  var bgImg = new Image();
-  bgImg.src = "background.png"; // since it's in the same html5game folder
-
-  var canvas = document.getElementById("canvas");
-  if (!canvas) return;
-
-  var ctx = canvas.getContext("2d");
-
-  function drawBg() {
-    if (!bgImg.complete) return;
-    ctx.save();
-    ctx.globalCompositeOperation = "destination-over";
-    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-    ctx.restore();
-  }
-
-  // try to draw every frame
-  var oldGi5 = window._Gi5;
-  if (typeof oldGi5 === "function") {
-    window._Gi5 = function() {
-      var r = oldGi5.apply(this, arguments);
-      try { drawBg(); } catch(e) {}
-      return r;
-    };
-  }
 })();
