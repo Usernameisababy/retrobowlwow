@@ -44,7 +44,7 @@
     window._Q_ = function () {
       tickerMessageIndex = (tickerMessageIndex + 1) % 2;
       return tickerMessageIndex === 0
-        ? "Niggaaaaaaaaaaaaaa"
+        ? "tell people about this bruh"
         : "Mod made by Max ";
     };
   }
