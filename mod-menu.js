@@ -517,7 +517,8 @@
       window._y11.__jaxHooked = true;
     }
   }
-    function applyMatchControls() {
+
+  function applyMatchControls() {
     if (typeof window._si !== "function") return;
 
     try {
@@ -897,7 +898,8 @@
   panel.addEventListener("keyup", function (e) {
     e.stopPropagation();
   });
-    panel.addEventListener("keypress", function (e) {
+
+  panel.addEventListener("keypress", function (e) {
     e.stopPropagation();
   });
 
@@ -1017,93 +1019,48 @@
     window._5g1(controller, controller);
   };
 
-  // WIN 17 GAMES / REACH PLAYOFFS
-  // Uses the existing in-game Win Game function for each loaded matchup.
-  // The player advances to the next week normally; this button handles each
-  // newly loaded game until 17 win-game calls have been made.
-  var seasonWinRun = null;
-
-  function stopSeasonWinRun(message) {
-    if (!seasonWinRun) return;
-    clearInterval(seasonWinRun.timer);
-    seasonWinRun = null;
-    if (message) alert(message);
-  }
-
-  function runSeasonWinOnMatch(match) {
-    if (!seasonWinRun || !match) return false;
-
-    var controller = activeController();
-    if (!controller || typeof window._5g1 !== "function") {
-      stopSeasonWinRun("Could not access the game's win function. No more games were changed.");
-      return false;
-    }
-
-    if (match._Sb1 && match._0z !== undefined) {
-      var playerSide = match._0z;
-      var opponentSide = playerSide ? 0 : 1;
-      match._Sb1[playerSide] = 67;
-      match._Sb1[opponentSide] = 0;
-    }
-
-    seasonWinRun.lastMatch = match;
-    seasonWinRun.count += 1;
-    setGamePaused(false);
-
-    try {
-      window._5g1(controller, controller);
-    } catch (err) {
-      stopSeasonWinRun("The game could not finish this matchup. Stopped after " +
-        (seasonWinRun ? seasonWinRun.count - 1 : 0) + " win attempts.");
-      return false;
-    }
-
-    if (seasonWinRun && seasonWinRun.count >= 17) {
-      stopSeasonWinRun("Triggered the win function for all 17 regular-season games. Advance through the game's result screens if needed; the game itself must record the results.");
-    }
-    return true;
-  }
-
+  // WIN 17-WEEK SEASON BUTTON
+  // This edits the save to attempt to move the season to the playoffs.
   document.getElementById("a-win-season").onclick = function () {
-    if (seasonWinRun) {
-      stopSeasonWinRun("17-game win assist stopped.");
-      return;
-    }
-
     var save = getSave();
+
     if (!save || save.indexOf("[savegame]") === -1) {
       alert("No save yet. Start a career first.");
       return;
     }
 
-    var match = activeMatch();
-    if (!match) {
-      alert("Start a regular-season game first, then press this button. It will win each loaded game as you advance week by week.");
-      return;
-    }
-    if (typeof window._5g1 !== "function" || !activeController()) {
-      alert("The game's win function is not available right now. Start a game first.");
-      return;
-    }
+    save = replaceField(save, "last_week_regular", 18);
+    save = replaceField(save, "first_week_playoffs", 19);
+    save = replaceField(save, "week", 19);
+    save = replaceField(save, "stage", 1);
 
-    seasonWinRun = {
-      count: 0,
-      lastMatch: null,
-      timer: null
-    };
+    ["wins", "season_wins", "team_wins", "record_wins"].forEach(
+      function (field) {
+        if (
+          new RegExp("(?:^|[\\r\\n])" + field + '=["\\\']').test(save)
+        ) {
+          save = replaceField(save, field, 17);
+        }
+      }
+    );
 
-    if (!runSeasonWinOnMatch(match)) return;
+    ["losses", "season_losses", "team_losses", "record_losses"].forEach(
+      function (field) {
+        if (
+          new RegExp("(?:^|[\\r\\n])" + field + '=["\\\']').test(save)
+        ) {
+          save = replaceField(save, field, 0);
+        }
+      }
+    );
 
-    seasonWinRun.timer = window.setInterval(function () {
-      if (!seasonWinRun) return;
+    setSave(save);
 
-      var nextMatch = activeMatch();
-      if (!nextMatch || nextMatch === seasonWinRun.lastMatch) return;
+    alert(
+      "Regular season skipped (17-0). Reloading to enter the playoffs."
+    );
 
-      runSeasonWinOnMatch(nextMatch);
-    }, 250);
-
-    alert("17-game win assist started. It has triggered the current game's win. Advance through the result screen and start the next week's game; the assist will win each newly loaded matchup. Press the button again to stop.");
+    location.reload();
   };
 
   document.getElementById("a-morale-max").onclick = function () {
